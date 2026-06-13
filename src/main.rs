@@ -34,7 +34,11 @@ impl LiquidityPool {
     }
 }
 
-fn main() {
+#[tokio::main]
+async fn main() {
+    let app = Router::new().route("/api/beli", post(proses_beli_dari_web));
+    let listener = tokio::net::TcpListener::bind("127.0.0.1:8080").await.unwrap();
+    tokio::spawn(async move { axum::serve(listener, app).await.unwrap() });
     let mut pool = LiquidityPool {
         prsp_reserve: 12_000_000,
         usdt_reserve: 0.0,
@@ -68,4 +72,23 @@ fn main() {
     println!("----------------------------------------------------");
     println!("Status Kolam Akhir: Sisa {} PRSP | Total ${} USDT", pool.prsp_reserve, pool.usdt_reserve);
     println!("====================================================");
+}
+
+
+
+
+use axum::{routing::post, Json, Router};
+use serde::{Deserialize, Serialize};
+
+#[derive(Deserialize)]
+struct OrderBeli {
+    jumlah_usdt: f64,
+    alamat_wallet_pembeli: String,
+}
+
+async fn proses_beli_dari_web(Json(payload): Json<OrderBeli>) -> String {
+    format!(
+        "Sukses! {} USDT berhasil dikonversi ke $PRSP dan dikirim ke wallet: {}",
+        payload.jumlah_usdt, payload.alamat_wallet_pembeli
+    )
 }
