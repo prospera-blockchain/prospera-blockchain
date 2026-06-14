@@ -18,8 +18,19 @@ jobs:
         with:
           channel: 'stable'
           
-      - name: Install Dependencies
-        run: flutter pub get
-        
-      - name: Build APK
-        run: flutter build apk --split-per-abi
+      - name: Create Clean Flutter Project Automatically
+        run: |
+          flutter create prospera_app --org com.prospera --project-name prospera_app
+          cp main.dart prospera_app/lib/main.dart
+
+      - name: Build APK File
+        run: |
+          cd prospera_app
+          flutter build apk --release
+          
+      - name: Upload Finished APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: prospera-wallet-apk
+          path: prospera_app/build/app/outputs/flutter-apk/app-release.apk
+          
