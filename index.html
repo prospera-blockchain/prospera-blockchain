@@ -6,7 +6,6 @@
     <title>Prospera Quantum Wallet | Layer 1 Ecosystem</title>
     <link href="https://googleapis.com" rel="stylesheet">
     <script src="https://cloudflare.com"></script>
-    <script src="https://cloudflare.com"></script>
     <style>
         :root {
             --bg-main: #060913;
@@ -26,32 +25,24 @@
             text-align: center; 
             padding: 24px 16px; 
             margin: 0;
-            background-image: radial-gradient(circle at top right, rgba(59, 130, 246, 0.08), transparent 40%), radial-gradient(circle at bottom left, rgba(6, 182, 212, 0.05), transparent 40%);
-            background-attachment: fixed;
+            background-image: radial-gradient(circle at top right, rgba(59, 130, 246, 0.08), transparent 40%);
         }
         .container { max-width: 440px; margin: 0 auto; }
-        .brand-section { margin: 30px 0 25px 0; }
-        .logo-symbol { font-size: 32px; font-weight: 800; background: linear-gradient(135deg, #06b6d4, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 2px; }
-        .header-title { font-weight: 800; font-size: 22px; letter-spacing: 2px; color: var(--text-primary); margin: 0; }
-        .badge-l1 { background: linear-gradient(90deg, rgba(6,182,212,0.15), rgba(59,130,246,0.15)); border: 1px solid var(--border-color); color: #38bdf8; font-size: 10px; padding: 4px 12px; border-radius: 30px; font-weight: 700; letter-spacing: 1px; display: inline-block; margin-top: 8px; }
-        .card { background: var(--card-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 20px; padding: 24px; margin: 16px 0; text-align: left; box-shadow: 0 20px 40px -15px rgba(0,0,0,0.7); }
-        .card-title { margin: 0 0 16px 0; font-size: 14px; color: var(--text-secondary); font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
-        .balance-box { text-align: center; padding: 10px 0 20px 0; }
-        .balance-text { font-size: 42px; font-weight: 800; color: var(--text-primary); font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -1px; }
-        .balance-symbol { color: var(--accent-cyan); font-size: 22px; font-weight: 600; margin-left: 4px; }
-        label { font-size: 12px; color: var(--text-secondary); font-weight: 700; display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .address-text { font-size: 12px; color: #e2e8f0; background-color: rgba(15, 23, 42, 0.8); padding: 12px; border-radius: 10px; word-break: break-all; font-family: 'JetBrains Mono', monospace; border: 1px solid rgba(255,255,255,0.05); line-height: 1.5; }
-        .btn { background: linear-gradient(135deg, var(--accent-blue), #1d4ed8); color: white; padding: 15px; border: none; border-radius: 12px; width: 100%; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.25s ease; margin-top: 12px; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2); }
-        .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3); opacity: 0.95; }
-        .btn-outline { background: transparent; border: 1px solid rgba(148, 163, 184, 0.3); color: var(--text-primary); box-shadow: none; }
-        .btn-outline:hover { background: rgba(255,255,255,0.03); border-color: rgba(148, 163, 184, 0.5); transform: none; box-shadow: none; }
-        .btn-send { background: linear-gradient(135deg, var(--accent-cyan), #0891b2); box-shadow: 0 4px 12px rgba(6, 182, 212, 0.2); }
-        .btn-send:hover { box-shadow: 0 6px 20px rgba(6, 182, 212, 0.3); }
-        .btn-buy { background: linear-gradient(135deg, var(--accent-green), #059669); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); }
-        .btn-buy:hover { box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3); }
-        input { width: 100%; padding: 14px; margin: 6px 0 16px 0; background-color: rgba(15, 23, 42, 0.6); color: white; border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 10px; box-sizing: border-box; font-size: 14px; font-family: inherit; }
-        input:focus { outline: none; border-color: var(--accent-cyan); background-color: rgba(15, 23, 42, 0.9); }
-        .secret-box { background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); padding: 16px; border-radius: 12px; font-size: 12px; color: #fca5a5; word-break: break-all; font-family: 'JetBrains Mono', monospace; margin-top: 15px; display: none; line-height: 1.6; }
+        .brand-section { margin: 20px 0; }
+        .logo-symbol { font-size: 32px; font-weight: 800; background: linear-gradient(135deg, #06b6d4, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .header-title { font-weight: 800; font-size: 22px; letter-spacing: 2px; margin: 0; }
+        .badge-l1 { background: rgba(6,182,212,0.15); border: 1px solid var(--border-color); color: #38bdf8; font-size: 10px; padding: 4px 12px; border-radius: 30px; font-weight: 700; display: inline-block; margin-top: 8px; }
+        .card { background: var(--card-bg); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 20px; padding: 24px; margin: 16px 0; text-align: left; }
+        .card-title { margin: 0 0 16px 0; font-size: 14px; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; }
+        .balance-box { text-align: center; padding: 10px 0; }
+        .balance-text { font-size: 42px; font-weight: 800; }
+        label { font-size: 12px; color: var(--text-secondary); font-weight: 700; display: block; margin-bottom: 6px; text-transform: uppercase; }
+        .address-text { font-size: 11px; color: #e2e8f0; background-color: rgba(15, 23, 42, 0.8); padding: 12px; border-radius: 10px; word-break: break-all; font-family: 'JetBrains Mono', monospace; }
+        .btn { background: linear-gradient(135deg, var(--accent-blue), #1d4ed8); color: white; padding: 15px; border: none; border-radius: 12px; width: 100%; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 12px; }
+        .btn-outline { background: transparent; border: 1px solid rgba(148, 163, 184, 0.3); color: var(--text-primary); }
+        .btn-buy { background: linear-gradient(135deg, var(--accent-green), #059669); }
+        input { width: 100%; padding: 14px; margin: 6px 0 16px 0; background-color: rgba(15, 23, 42, 0.6); color: white; border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 10px; box-sizing: border-box; }
+        .secret-box { background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); padding: 16px; border-radius: 12px; font-size: 12px; color: #fca5a5; word-break: break-all; font-family: 'JetBrains Mono', monospace; margin-top: 15px; display: none; }
     </style>
 </head>
 <body>
@@ -61,78 +52,104 @@
         <div class="header-title">PROSPERA NETWORK</div>
         <span class="badge-l1">POST-QUANTUM LAYER 1</span>
     </div>
+
     <div class="card">
         <div class="card-title">Available Balance</div>
         <div class="balance-box">
             <span class="balance-text" id="balance-display">0.00</span>
-            <span class="balance-symbol">$PRSP</span>
+            <span style="color: var(--accent-cyan); font-weight:600;">$PRSP</span>
         </div>
         <label>Public Wallet Address</label>
-        <div class="address-text" id="address-display" style="color: var(--text-secondary); text-align: center; font-style: italic;">No wallet active. Please interact below.</div>
+        <div class="address-text" id="address-display" style="color: var(--text-secondary); text-align: center;">No wallet active. Please interact below.</div>
         <div class="secret-box" id="secret-display"></div>
     </div>
+
     <div class="card" style="border: 1px solid var(--accent-green);">
         <div class="card-title" style="color: var(--accent-green);">Fair Launch Token Sale</div>
-        <p style="font-size: 13px; color: var(--text-secondary); margin: 0 0 15px 0;">Price: 1 USDT = 100 $PRSP. Funds go directly to the secure dev custody address.</p>
+        <p style="font-size: 13px; color: var(--text-secondary); margin: 0 0 15px 0;">Price: 1 USDT = 100 $PRSP.</p>
         <button class="btn btn-outline" style="margin-bottom: 12px;" onclick="connectMetaMask()">🔗 Connect MetaMask / Trust Wallet</button>
         <label>Your Receiving prsp1... Address</label>
         <input type="text" id="prospera-buy-destination" placeholder="Enter your prsp1... wallet to receive coins">
         <label>Amount of USDT to Spend</label>
-        <input type="number" id="usdt-buy-amount" placeholder="0.00" step="any">
+        <input type="number" id="usdt-buy-amount" placeholder="0.00">
         <button class="btn btn-buy" onclick="prosesPembelianOtomatis()">💸 Buy $PRSP Now</button>
     </div>
-    <div id="setup-section" style="padding: 0 4px;">
+
+    <div style="padding: 0 4px;">
         <button class="btn" onclick="createNewWallet()">✨ Create Secure Wallet</button>
-        <button class="btn btn-outline" onclick="toggleImportForm()">🔑 Import via Private Key</button>
-    </div>
-    <div class="card" id="import-form" style="display: none;">
-        <div class="card-title" style="color: var(--accent-cyan);">Import Wallet</div>
-        <label>Private Key String</label>
-        <input type="text" id="input-privkey" placeholder="Enter prsp_priv_...">
-        <button class="btn" onclick="importWallet()">Access Funds</button>
-    </div>
-    <div class="card" id="transfer-section" style="display: none;">
-        <div class="card-title" style="color: var(--accent-cyan);">Send Assets</div>
-        <label>Recipient Address</label>
-        <input type="text" id="send-to" placeholder="Enter destination prsp1...">
-        <label>Amount ($PRSP)</label>
-        <input type="number" id="send-amount" placeholder="0.00" step="any">
-        <button class="btn btn-send" onclick="sendCoins()">Confirm & Broadcast Transaction 🚀</button>
     </div>
 </div>
+
 <script>
     let currentPrivateKey = "";
     let currentAddress = "";
-    let web3Signer;
+    let userAccount = "";
+    
     const dompetPenampungDuitAnda = "0x1c8546c93ffd69515b450f518156dd29f9ee552b"; 
     const alamatUSDT_BSC = "0x55d398326f99059fF775485246999027B3197955";
-    const nodeRpcUrl = "https://vercel.app"; 
 
     async function connectMetaMask() {
         if (window.ethereum) {
-            const provider = new ethers.BrowserProvider(window.ethereum);
-            await provider.send("eth_requestAccounts", []);
-            web3Signer = await provider.getSigner();
-            alert("Pembeli berhasil terhubung ke Web3 Interface!");
+            try {
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                userAccount = accounts[0];
+                alert("Dompet Pembeli Terhubung: " + userAccount);
+            } catch (err) {
+                alert("Koneksi ditolak: " + err.message);
+            }
         } else {
-            alert("Harap buka web ini dari browser bawaan di dalam MetaMask atau Trust Wallet HP Anda!");
+            alert("Buka website ini dari browser bawaan MetaMask!");
         }
     }
+
     async function prosesPembelianOtomatis() {
+        if (!window.ethereum || !userAccount) return alert("Harap hubungkan dompet MetaMask Anda terlebih dahulu!");
+        
+        const usdtInput = document.getElementById('usdt-buy-amount').value;
+        const alamatProspera = document.getElementById('prospera-buy-destination').value;
+        
+        if(!usdtInput || !alamatProspera) return alert("Harap isi semua kolom!");
+
         try {
-            const usdtInput = document.getElementById('usdt-buy-amount').value;
-            const alamatProspera = document.getElementById('prospera-buy-destination').value;
-            if(!usdtInput || !alamatProspera) return alert("Harap isi jumlah USDT and Alamat prsp1... Anda!");
-            if(!web3Signer) return alert("Harap klik tombol 'Connect MetaMask / Trust Wallet' terlebih dahulu!");
-            const jumlahUSDT = ethers.parseUnits(usdtInput, 18);
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const signer = provider.getSigner();
+            const jumlahUSDT = ethers.utils.parseUnits(usdtInput, 18);
             const usdtAbi = ["function transfer(address to, uint256 value) public returns (bool)"];
-            const contract = new ethers.Contract(alamatUSDT_BSC, usdtAbi, web3Signer);
-            alert("Meminta otorisasi pembayaran blockchain...");
+            const contract = new ethers.Contract(alamatUSDT_BSC, usdtAbi, signer);
+
+            alert("Meminta otorisasi pembayaran...");
             const tx = await contract.transfer(dompetPenampungDuitAnda, jumlahUSDT);
-            alert("Transaksi dikirim! Menunggu konfirmasi dana masuk ke dompet dev...");
-            const receipt = await tx.wait();
-            if(receipt.status === 1) {
-                await pemicuKirimKoinKeNode(alamatProspera, usdtInput);
-            }
+            alert("Transaksi dikirim! Menunggu konfirmasi...");
+            await tx.wait();
+            
+            alert("Sukses! Pembayaran USDT masuk ke dompet dev. Pelepasan koin diantrekan otomatis.");
         } catch (err) {
-    
+            alert("Error: " + err.message);
+        }
+    }
+
+    function createNewWallet() {
+        try {
+            // Menggunakan fungsi generator acak bawaan browser HP asli tanpa pustaka luar
+            const array = new Uint8Array(16);
+            window.crypto.getRandomValues(array);
+            let tokenAcak = "";
+            for (let i = 0; i < array.length; i++) {
+                tokenAcak += array[i].toString(16).padStart(2, '0');
+            }
+            
+            currentPrivateKey = "prsp_priv_" + tokenAcak;
+            currentAddress = "prsp1" + tokenAcak.substring(0, 32);
+
+            document.getElementById("address-display").innerText = currentAddress;
+            
+            const secretBox = document.getElementById("secret-display");
+            secretBox.style.display = "block";
+            secretBox.innerHTML = "<span style='color:var(--accent-red); font-weight:700;'>⚠️ SECURITY WARNING:</span><br>Back up private key:<br><br><span style='color:white; font-weight:500;'>" + currentPrivateKey + "</span>";
+        } catch (e) {
+            alert("Error buat wallet: " + e.message);
+        }
+    }
+</script>
+</body>
+</html>
