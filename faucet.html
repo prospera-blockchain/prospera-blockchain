@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prospera Quantum Network | DEX & Wallet Ecosystem</title>
+    <style>
+        :root {
+            --bg-color: #030712;
+            --card-bg: rgba(17, 24, 39, 0.75);
+            --primary: #10b981;
+            --primary-glow: rgba(16, 185, 129, 0.4);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border: rgba(16, 185, 129, 0.25);
+        }
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            color: var(--text-main);
+            margin: 0;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 450px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+            margin-top: 10px;
+        }
+        .header h1 {
+            font-size: 26px;
+            margin: 0 0 6px 0;
+            letter-spacing: 0.5px;
+        }
+        .badge {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: 1px solid var(--border);
+        }
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 22px;
+            margin-bottom: 18px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        }
+        .card-title {
+            color: var(--primary);
+            margin: 0 0 14px 0;
+            font-size: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .balance-num {
+            font-size: 38px;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+        .input-group {
+            margin-bottom: 14px;
+        }
+        .input-group label {
+            font-size: 12px;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 6px;
+        }
+        .input-field {
+            width: 100%;
+            background: #111827;
+            border: 1px solid #374151;
+            color: #fff;
+            padding: 14px;
+            border-radius: 12px;
+            box-sizing: border-box;
+            font-size: 14px;
+            transition: border 0.3s;
+        }
+        .input-field:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            margin-bottom: 12px;
+        }
+        .btn-outline:hover {
+            background: rgba(16, 185, 129, 0.1);
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: #030712;
+            border: none;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 0 22px var(--primary);
+        }
+        .secret-box {
+            background: #111322;
+            border: 1px dashed #ef4444;
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 12px;
+            font-size: 12px;
+            word-break: break-all;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Jaringan Prospera</h1>
+        <span class="badge">Lapisan Pasca-Kuantum 1</span>
+    </div>
+
+    <div class="card" style="text-align: center;">
+        <span style="color: var(--text-muted); font-size: 12px; letter-spacing: 1px;">SALDO PROSPERA WALLET</span>
+        <div class="balance-num"><span id="saldoTxt">0.00</span> <span style="color: var(--primary); font-size: 22px;">$PRSP</span></div>
+        <p id="alamatTxt" style="color: var(--text-muted); font-size: 12px; margin: 0; word-break: break-all;">Dompet belum dimuat. Silakan buat/buka dompet Anda di bawah.</p>
+        <div class="secret-box" id="privKeyBox"></div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">💱 Prospera Bursa DEX & Faucet</div>
+        
+        <button class="btn btn-outline" onclick="aksiBuatDompet()">
+            🔐 Buat Akun Dompet Aman Baru
+        </button>
+
+        <div class="input-group">
+            <label>Alamat Dompet Penerimaan ($PRSP)</label>
+            <input type="text" id="inputAlamat" class="input-field" placeholder="Masukkan alamat prsp1...">
+        </div>
+
+        <div class="input-group">
+            <label>Jumlah Pembelian via USDT / Jumlah Klaim</label>
+            <input type="number" id="inputJumlah" class="input-field" value="100" readonly>
+        </div>
+
+        <button class="btn btn-primary" style="margin-bottom: 12px;" onclick="eksekusiAPI('/api/swap')">
+            💸 Eksekusi Instant Swap (DEX)
+        </button>
+
+        <button class="btn btn-outline" style="border-color:#3b82f6; color:#3b82f6;" onclick="eksekusiAPI('/api/faucet')">
+            🚰 Ambil 100 $PRSP Gratis (Faucet)
+        </button>
+    </div>
+</div>
+
+<script>
+    const ALAMAT_SERVER_TERMUX = "https://lhr.life"; 
+
+    function aksiBuatDompet() {
+        const kodeAcak = Array.from({length: 16}, () => Math.floor(Math.random() * 256).toString(16).padStart(2, '0')).join('');
+        const alamatBaru = "prsp1" + kodeAcak.substring(0, 14);
+        const kunciPrivat = "prsp_secret_key_" + kodeAcak;
+
+        document.getElementById("alamatTxt").innerText = "Alamat Aktif: " + alamatBaru;
+        document.getElementById("inputAlamat").value = alamatBaru;
+        
+        const boxSinyal = document.getElementById("privKeyBox");
+        boxSinyal.style.display = "block";
+        boxSinyal.innerHTML = `<span style="color:#ef4444; font-weight:bold;">KUNCI PRIVAT (RAHASIA):</span><br>${kunciPrivat}`;
+    }
+
+    function eksekusiAPI(rute) {
+        const alamatKirim = document.getElementById("inputAlamat").value;
+        if(!alamatKirim) {
+            alert("Harap masukkan atau buat alamat dompet terlebih dahulu!");
+            return;
+        }
+
+        fetch(ALAMAT_SERVER_TERMUX + rute, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ address: alamatKirim })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.success) {
+                alert("Sukses! " + data.message);
+                document.getElementById("saldoTxt").innerText = data.balance.toFixed(2);
+            } else {
+                alert("Gagal: " + data.error);
+            }
+        })
+        .catch(err => {
+            alert("Gagal terhubung ke node server. Pastikan Termux Anda dan terowongan jembatan internetnya sudah aktif!");
+        });
+    }
+</script>
+</body>
+</html>
